@@ -22,3 +22,25 @@ export function fetchHouse(id) {
     resolve(data);
   });
 }
+
+export function fetchRoommates(id) {
+  return new Promise(async (resolve, reject) => {
+    const { data, error } = await supabase
+      .from("roommates")
+      .select(`*`)
+      .eq("house_id", id);
+    if (error) reject(error);
+    resolve(data);
+  });
+}
+
+export function setRoommates(payload) {
+  return new Promise(async (resolve, reject) => {
+    const { data, error } = await supabase
+      .from("roommates")
+      .insert({ ...payload })
+      .select(`*`);
+    if (error) reject(error);
+    resolve(data);
+  });
+}
