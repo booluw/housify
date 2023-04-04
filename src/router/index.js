@@ -2,7 +2,25 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
 
+import { supabase } from "@/config/supabase";
+
 Vue.use(VueRouter);
+
+async function guard(to, from, next) {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    localStorage.setItem("user", user.data.user.email);
+    next();
+  } else {
+    if (to.query.continue) {
+      next(`/auth/login?continue=${to.query.continue}`);
+    } else {
+      next(`/auth/login?continue=${to.fullPath}`);
+    }
+  }
+}
 
 const routes = [
   {
@@ -13,12 +31,19 @@ const routes = [
   {
     path: "/about",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
   },
+  {
+    path: "/house",
+    name: "HousesView",
+    redirect: "/"
+  },
+  {
+    path: "/house/:id",
+    name: "HouseView",
+    component: () => import ("../views/Houses/HouseView.vue")
+  }
 ];
 
 const router = new VueRouter({
