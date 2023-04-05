@@ -11,7 +11,6 @@ async function guard(to, from, next) {
     data: { user },
   } = await supabase.auth.getUser();
   if (user) {
-    localStorage.setItem("user", user.data.user.email);
     next();
   } else {
     if (to.query.continue) {
@@ -43,6 +42,18 @@ const routes = [
     path: "/house/:id",
     name: "HouseView",
     component: () => import ("../views/Houses/HouseView.vue")
+  },
+  {
+    path: '/admin',
+    name: "AdminDashboard",
+    component: () => import ("../views/Dashboards/AdminDashboard.vue"),
+    beforeEnter: guard,
+  },
+  {
+    path: "/landlord",
+    name: "LandlordDashboard",
+    component: () => import ("../views/Dashboards/AgentDashboard.vue"),
+    beforeEnter: guard,
   }
 ];
 

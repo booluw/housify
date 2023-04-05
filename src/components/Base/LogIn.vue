@@ -92,7 +92,7 @@
 </template>
 
 <script>
-import { login, register, addUser } from "@/services/auth.js";
+import { login, register, addUser, fetchUser } from "@/services/auth.js";
 
 export default {
   name: "LogIn",
@@ -113,11 +113,19 @@ export default {
       try {
         await login(this.auth);
         localStorage.setItem("user", this.auth.email)
+        const user = await fetchUser(this.auth.email);
+        localStorage.setItem("_userData", JSON.stringify(user[0]));
+        if (user[0].account_type === "admin") {
+          this.$router.push("/admin")
+        } else {
+          this.$router.push("/landlord")
+        }
       } catch (error) {
         console.log(error);
         this.$message.error(error);
       }
       this.submitting = false;
+      this.$emit("close");
     },
     async RegisterUser() {
       this.submitting = true;

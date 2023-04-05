@@ -4,7 +4,7 @@ export function fetchHouses(range) {
   return new Promise(async (resolve, reject) => {
     const { data, error } = await supabase
       .from("houses")
-      .select(`*, agent:agents(*)`)
+      .select(`*, agent:profiles(*)`)
       .range(range.start, range.end)
       .order("created_at", { ascending: true });
     if (error) reject(error);
@@ -16,7 +16,7 @@ export function fetchHouse(id) {
   return new Promise(async (resolve, reject) => {
     const { data, error } = await supabase
       .from("houses")
-      .select(`*, agent:agents(*)`)
+      .select(`*, agent:profiles(*)`)
       .eq("house_id", id);
     if (error) reject(error);
     resolve(data);

@@ -6,8 +6,11 @@
       <i class="icofont-home text-primary text-3xl"></i>
     </router-link>
     <div class="w-2/3 flex items-center justify-end gap-5">
-      <i class="el-icon-search text-3xl text-primary" />
-      <el-button type="primary" @click="loginModal = true"> Log In </el-button>
+      <el-button
+        type="primary"
+        @click="loginModal = true"
+        v-if="!loggedIn"
+      > Log In </el-button>
     </div>
     <log-in v-if="loginModal" @close="loginModal = false" />
   </header>
@@ -24,5 +27,12 @@ export default {
       loginModal: false,
     };
   },
+  computed: {
+    loggedIn() {
+      const user = localStorage.getItem("user");
+      if (user) return true
+      return false
+    }
+  }
 };
 </script>
