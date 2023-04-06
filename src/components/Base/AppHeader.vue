@@ -11,12 +11,19 @@
         @click="loginModal = true"
         v-if="!loggedIn"
       > Log In </el-button>
+      <el-button
+        type="primary"
+        @click="LogOut()"
+        v-else
+      > Log Out </el-button>
     </div>
     <log-in v-if="loginModal" @close="loginModal = false" />
   </header>
 </template>
 
 <script>
+import { supabase } from "@/config/supabase";
+
 export default {
   name: "AppHeader",
   components: {
@@ -33,6 +40,17 @@ export default {
       if (user) return true
       return false
     }
-  }
+  },
+  methods: {
+    async LogOut() {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        this.$message.error(error)
+      } else {
+        localStorage.removeItem("user")
+        this.$router.go("/")
+      }
+    }
+  },
 };
 </script>

@@ -69,6 +69,13 @@
         <el-form-item label="Password">
           <el-input type="" v-model="auth.password" placeholder="Password" />
         </el-form-item>
+        <el-form-item label="Your phone number">
+          <el-input
+            type=""
+            v-model="phone"
+            placeholder="0900000899384"
+          />
+        </el-form-item>
         <el-button
           type="primary"
           class="mt-3 w-full bg-primary"
@@ -103,6 +110,7 @@ export default {
         password: "",
       },
       name: "",
+      phone: "",
       submitting: false,
       action: 1,
     };
@@ -115,23 +123,24 @@ export default {
         localStorage.setItem("user", this.auth.email)
         const user = await fetchUser(this.auth.email);
         localStorage.setItem("_userData", JSON.stringify(user[0]));
+        console.log(user[0].account_type)
         if (user[0].account_type === "admin") {
-          this.$router.push("/admin")
+          this.$router.go("/admin")
         } else {
-          this.$router.push("/landlord")
+          this.$router.go("/landlord")
         }
+        this.$emit("close");
       } catch (error) {
         console.log(error);
         this.$message.error(error);
       }
       this.submitting = false;
-      this.$emit("close");
     },
     async RegisterUser() {
       this.submitting = true;
       try {
         await register(this.auth);
-        await addUser({ email: this.auth.email, name: this.name});
+        await addUser({ email: this.auth.email, name: this.name, phone: this.phone });
         this.$message.success("Account created, please log in")
         this.action = 1
       } catch (error) {

@@ -13,11 +13,7 @@ async function guard(to, from, next) {
   if (user) {
     next();
   } else {
-    if (to.query.continue) {
-      next(`/auth/login?continue=${to.query.continue}`);
-    } else {
-      next(`/auth/login?continue=${to.fullPath}`);
-    }
+    next(`/`);
   }
 }
 
