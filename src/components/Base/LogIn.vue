@@ -123,13 +123,12 @@ export default {
         localStorage.setItem("user", this.auth.email)
         const user = await fetchUser(this.auth.email);
         localStorage.setItem("_userData", JSON.stringify(user[0]));
-        console.log(user[0].account_type)
-        if (user[0].account_type === "admin") {
-          this.$router.go("/admin")
+        if ((user[0]).account_type === "admin") {
+          this.$router.replace("/admin")
         } else {
-          this.$router.go("/landlord")
+          this.$router.replace("/landlord")
         }
-        this.$emit("close");
+        this.$emit("loggedIn");
       } catch (error) {
         console.log(error);
         this.$message.error(error);
