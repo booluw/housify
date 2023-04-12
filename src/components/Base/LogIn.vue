@@ -25,13 +25,13 @@
         <el-form-item label="Password">
           <el-input type="" v-model="auth.password" placeholder="Password" />
         </el-form-item>
-        <el-button
-          type="primary"
-          class="mt-3 w-full bg-primary"
+        <button
+          class="mt-3 w-full bg-blue-500 text-white py-3 px-7 rounded-lg shadow"
           @click="logUserIn()"
-          :loading="submitting"
-          >Log In</el-button
+          :disabled="submitting"
         >
+          Log In
+        </button>
         <p class="text-center text-sm mt-5">
           Don't have an account?
           <a
@@ -76,14 +76,13 @@
             placeholder="0900000899384"
           />
         </el-form-item>
-        <el-button
-          type="primary"
-          class="mt-3 w-full bg-primary"
+        <button
+          class="mt-3 w-full bg-blue-500 text-white py-3 px-7 rounded-lg shadow"
           @click="RegisterUser()"
-          :loading="submitting"
+          :disabled="submitting"
         >
           Register
-        </el-button>
+        </button>
         <p class="text-center text-sm mt-5">
           Registered already?
           <a

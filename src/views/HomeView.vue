@@ -19,7 +19,7 @@
         >
           <div class="w-full h-48 bg-primary rounded-2xl overflow-hidden">
             <img
-              :src="house.imgs[1]"
+              :src="house.imgs[0]"
               class="h-full w-auto transition-all hover:transition-all hover:scale-105"
             />
           </div>

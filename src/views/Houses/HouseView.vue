@@ -1,5 +1,5 @@
 <template>
-  <div class="relative min-h-screen">
+  <div class="relative min-h-screen md:px-14">
     <div class="relative">
       <div
         class="absolute top-0 bottom-0 flex items-center left-0 bg-black bg-opacity-30"
@@ -79,20 +79,19 @@
           >
         </div>
       </div>
-      <div class="mt-3 mb-32" v-else>
+      <div class="mt-3 mb-32">
         <el-button type="secondary" class="w-full" @click="roommateModal = true"
           >Ask for Room mate</el-button
         >
       </div>
     </div>
     <div class="fixed bottom-0 right-0 left-0 p-5 bg-secondary">
-      <el-button type="primary" class="w-full" @click="bookLodgeModal = true">
+      <button
+        class="mt-3 w-full bg-blue-500 text-white py-3 px-7 rounded-lg shadow"
+        @click="bookLodgeModal = true"
+      >
         Book for ₦{{ Number(house.price).toLocaleString("en") }}/Yr
-      </el-button>
-      <p class="text-xs text-center text-red-500 mt-3">
-        You'll be given the landlord's contact. Do not pay unless you see what
-        you're paying for.
-      </p>
+      </button>
     </div>
     <el-dialog title="Ask for Room mate" :visible.sync="roommateModal" width="100%" fullscreen>
       <el-form :model="form" class="w-full md:w-1/2">
@@ -108,21 +107,28 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="roommateModal = false">Cancel</el-button>
-        <el-button :loading="loading" type="primary" @click="submitRoomMate()"
-          >Submit</el-button
+        <button
+          class="bg-blue-500 text-white py-3 px-7 rounded-lg shadow"
+          :disabled="loading"
+          @click="submitRoomMate()"
         >
+          Submit
+        </button>
       </span>
     </el-dialog>
     <el-dialog :title="`Book a room in ${house.name}`" :visible.sync="bookLodgeModal" width="100%" fullscreen>
       <div class="">
-        Please contact <b>{{ house.agent.name }}</b> for this lodge. It is advised that you visit the lodge before making any payment.
+        Please contact <b>{{ house.agent.name }}</b> for this lodge.
         <br />
         Contact <b>{{ house.agent.name }}</b> on <b>{{ house.agent.phone }}</b>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button @click="bookLodgeModal = false">Cancel</el-button>
-        <a :href="`tel:${house.agent.phone}`" class="ml-4">
-          <el-button type="primary">Click to call {{ house.agent.name }}</el-button>
+        <a
+          :href="`tel:${house.agent.phone}`"
+          class="ml-4 bg-blue-500 text-white py-3 px-7 rounded-lg"
+        >
+          Click to call {{ house.agent.name }}
         </a>
       </span>
     </el-dialog>

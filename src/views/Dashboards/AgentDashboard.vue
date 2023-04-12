@@ -1,8 +1,13 @@
 <template>
-  <div class="">
+  <div class="px-5 md:px-14">
     <div class="flex justify-between items-start m-5">
       <h1 class="text-3xl">Welcome</h1>
-      <el-button type="primary" @click="housesModal =  true">Add New Lodge</el-button>
+      <button
+        class="mt-3 bg-blue-500 text-white py-3 px-7 rounded-lg shadow"
+        @click="housesModal =  true"
+      >
+        Add New Lodge
+      </button>
     </div>
     <el-table :data="houses" style="width: 100%" :loading="loading">
       <el-table-column label="" width="50">
@@ -27,8 +32,20 @@
       </el-table-column>
       <el-table-column label="Action" width="200">
         <template slot-scope="scope">
-          <el-button @click="toggleAvailability(scope.row)" icon="el-icon-check" class="w-full" type="danger" v-if="scope.row.available">Mark as Unavailable</el-button>
-          <el-button @click="toggleAvailability(scope.row)" icon="el-icon-check" class="w-full" type="primary" v-else>Mark as Available</el-button>
+          <button
+            @click="toggleAvailability(scope.row)"
+            v-if="scope.row.available"
+            class="mt-3 w-full bg-red-500 text-white py-3 px-7 rounded-lg shadow"
+          >
+            Mark as Unavailable
+          </button>
+          <button          
+            class="mt-3 w-full bg-blue-500 text-white py-3 px-7 rounded-lg shadow"
+            @click="toggleAvailability(scope.row)"
+            v-else
+          >
+            Mark as Available
+          </button>
         </template>
       </el-table-column>
     </el-table>
@@ -105,9 +122,13 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="housesModal = false">Cancel</el-button>
-        <el-button :loading="loading" type="primary" @click="submitNewHouse()"
-          >Submit</el-button
+        <button
+          class="ml-3 bg-blue-500 text-white py-3 px-7 rounded-lg shadow"
+          :disabled="loading"
+          @click="submitNewHouse()"
         >
+          Submit
+        </button>
       </span>
     </el-dialog>
   </div>
